@@ -1,12 +1,11 @@
 import React from 'react'
-import ProjectCard from './ProjectCard'
 
 const PageNotFound = ({componentHeight}) => {
+  // const [height,setHeight] =  
   return (
-    <div className={`h-[calc(100vh-80px)] w-full overflow-scroll`}>
+    <main className='grid place-items-center h-full text-xl font-bold'>
       PageNotFound
- 
-      </div>
+      </main>
   )
 }
 

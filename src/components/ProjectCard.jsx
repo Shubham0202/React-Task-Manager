@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { BiUser } from 'react-icons/bi'
 
-const ProjectCard = ({title,date,tag}) => {
+const ProjectCard = ({title="your project title",date="1 jan 2024",tag}) => {
     const randomColors = ['bg-pink-600','bg-blue-600','bg-orange-600','bg-green-600','bg-black'];
     const cardRef = useRef();
     const [randomColor,setRandomColor] = useState('blue');
@@ -21,8 +21,8 @@ const ProjectCard = ({title,date,tag}) => {
             <BiUser className='text-4xl bg-secondary-white rounded-full p-2'/>
             <h3 className="text-lg font-semibold line-clamp-1 capitalize text-white">project b</h3>
         </div>
-        <h2 className="title my-4 capitalize font-bold line-clamp-3 text-white">front end development</h2>
-        <div className="date text-slate-300 my-3">september 2024</div>
+        <h2 className="title my-4 capitalize font-bold line-clamp-3 text-white">{title}</h2>
+        <div className="date text-slate-300 my-3">{date}</div>
     </div>
   )
 }

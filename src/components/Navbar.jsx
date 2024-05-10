@@ -2,7 +2,7 @@ import React from 'react'
 import { BiBell, BiSearch } from 'react-icons/bi'
 import { FiHome } from 'react-icons/fi'
 import { HiOutlineCalendar } from 'react-icons/hi'
-import { Link } from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 
 const Navbar = () => {
     const iconSize = '3xl';
@@ -29,14 +29,13 @@ const Navbar = () => {
         }
     ]
   return (
-    <nav className='bg-white flex items-center justify-between border sm:border-0 py-2 px-4 fixed left-0 sm:left-auto bottom-0 w-full max-w-96 sm:max-w-[470px]'>
+    <nav className='bg-white flex items-center justify-between border sm:border-0 py-2 px-4 rounded-lg w-full sticky bottom-0'>
         {
             nav.map(item=>
-                // <Link key={item.title} to='/'>{item.title}</Link>
-                <Link className={`flex flex-col items-center justify-center capitalize`}  key={item.title} to={item.link}>
+                <NavLink key={item.title} to={item.link} className={({isActive})=>`${(isActive)? 'text-blue-700':'text-black'} font-semibold flex flex-col items-center justify-center capitalize`}>
                     {item.icon}
                     <span>{item.title}</span>
-                    </Link>
+                    </NavLink>
             )
         }
         

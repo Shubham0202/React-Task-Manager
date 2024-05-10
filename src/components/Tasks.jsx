@@ -5,31 +5,12 @@ import { CgChevronLeft } from 'react-icons/cg'
 import { Calender } from './Calender'
 import Process from './HomeComponents/Process'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+import useFetchData from '../Hooks/useFetchData'
+import Loader from './Loader/Loader'
+
 
 export const Tasks = () => {
-    const [tasks,setTasks] = useState([]);
-    async function fetchData() {
-        try {
-          const response = await axios.get('http://127.0.0.1:5000/data');
-      
-          if (response.status === 200) {
-            // Assuming the response is a string, attempt to parse it as JSON
-            let tasks;
-              tasks = response.data;
-            setTasks(tasks);
-            console.log('Tasks:', tasks);
-      
-          } else {
-            console.error('Error fetching data:', response.statusText);
-          }
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      }
-    useEffect(()=>{
-        fetchData();
-        },[])
+    const {tasks,isLoading,error} = useFetchData();
   return (
     <div className='h-[calc(100vh-150px)] sm:h-[calc(100vh-80px)] overflow-scroll'>
         <SencondaryNav first={<CgChevronLeft className='text-4xl'/>} second={<BiSearch className='text-4xl'/>}/>
@@ -40,8 +21,10 @@ export const Tasks = () => {
         <h2 className="font-bold text-xl">Process</h2>
         {
         /* show all tasks */
+        (isLoading)? <Loader/>:
+        (error)?<div className='text-center text-gray-500'>No Tasks Created Yet</div>:
         tasks.map(
-            (task)=> <Process taskName={task.title} description={task.description} />
+            (task)=> <Process key={task.id} taskName={task.title} description={task.description} />
         )
         }
         

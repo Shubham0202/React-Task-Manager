@@ -1,33 +1,47 @@
 import { useEffect, useState } from "react";
-import axios from 'axios'; // Assuming Axios is installed (`npm install axios`)
+import axios from 'axios'; 
 
-export default function useFetchData(url = 'http://127.0.0.1:5000/data') { // Optional default URL
+export default function useFetchData(url = 'http://127.0.0.1:5000/data',limit=0) { // Optional default URL
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(false); // Track loading state
   const [error, setError] = useState(null); // Track any errors
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true); // Set loading state to true
+      setIsLoading(true); 
       setError(null); // Clear any previous errors
 
       try {
-        const response = await axios.get(url);
-
-        if (response.status === 200) {
-          setTasks(response.data);
-        } else {
-          setError(new Error(`Error fetching data: ${response.statusText}`)); // Create a more informative error object
+        if(limit ==0)
+        {
+          const response = await axios.get(url);
+          if (response.status === 200) {
+            setTasks(response.data);
+          } else {
+            setError(new Error(`Error fetching data: ${response.statusText}`));
+          }
         }
+        else
+        {
+          const response = await axios.get(url,{
+            headers: { 'Content-Type': 'application/json' },
+            limit
+          });
+          if (response.status === 200) {
+            setTasks(response.data);
+          } else {
+            setError(new Error(`Error fetching data: ${response.statusText}`));
+          }
+        }
+
       } catch (error) {
-        setError(error); // Store the actual error object
+        setError(error); 
       } finally {
-        setIsLoading(false); // Set loading state to false regardless of success or failure
+        setIsLoading(false);
       }
     };
 
     fetchData();
-  }, [url]); // Dependency array to re-fetch data if URL changes
-
+  }, [url]); 
   return { tasks, isLoading, error };
 }
